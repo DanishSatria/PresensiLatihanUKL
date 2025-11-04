@@ -120,27 +120,27 @@ http://localhost:3000
 *Response: Token JWT berhasil di-generate*
 
 ### 2. Create User
-![Create User](screenshots/2-create-user.png)
+![Create User](2-create-user.png)
 *Response: User baru berhasil dibuat*
 
 ### 3. Get User Data
-![Get User](screenshots/3-get-user.png)
+![Get User](3-get-user.png)
 *Response: Data user berhasil diambil*
 
 ### 4. Attendance Check-in
-![Attendance Check-in](screenshots/4-attendance-checkin.png)
+![Attendance Check-in](4-attendance-checkin.png)
 *Response: Presensi berhasil dicatat*
 
 ### 5. Attendance History
-![Attendance History](screenshots/5-attendance-history.png)
+![Attendance History](5-attendance-history.png)
 *Response: Riwayat presensi user*
 
 ### 6. Monthly Summary
-![Monthly Summary](screenshots/6-monthly-summary.png)
+![Monthly Summary](6-monthly-summary.png)
 *Response: Rekap kehadiran bulanan*
 
 ### 7. Attendance Analysis
-![Attendance Analysis](screenshots/7-attendance-analysis.png)
+![Attendance Analysis](7-attendance-analysis.png)
 *Response: Analisis tingkat kehadiran*
 
 ## 🔐 Cara Penggunaan

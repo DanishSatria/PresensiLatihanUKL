@@ -116,7 +116,7 @@ http://localhost:3000
 ## 📸 Screenshot Hasil Testing
 
 ### 1. Login Berhasil
-![Login Success](screenshots/1-login-success.png)
+![Login Success](1-login-success.png)
 *Response: Token JWT berhasil di-generate*
 
 ### 2. Create User

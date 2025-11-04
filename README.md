@@ -1,98 +1,221 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📋 Aplikasi Presensi Online - UKL XI RPL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📖 Deskripsi Project
+Aplikasi Presensi Online adalah **RESTful API** yang dibangun menggunakan **NestJS** dan **Prisma ORM** untuk mengelola sistem presensi digital. Aplikasi ini memungkinkan pencatatan kehadiran pengguna (siswa/karyawan) beserta analisis data kehadiran secara real-time.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Teknologi yang Digunakan
+- **Framework**: NestJS
+- **Database**: MySQL dengan Prisma ORM
+- **Authentication**: JWT (JSON Web Token)
+- **Security**: bcryptjs untuk hashing password
+- **Testing**: Postman
 
-## Description
+## 📋 Fitur yang Tersedia
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 1. 🔐 Autentikasi
+- Login pengguna dengan username dan password
+- Generate JWT token untuk akses API
 
-## Project setup
+### 2. 👥 Manajemen Pengguna
+- Tambah data pengguna baru (siswa/karyawan)
+- Melihat data pengguna
+- Update data pengguna
+- Mendukung role-based access (siswa/karyawan)
 
+### 3. 📊 Presensi
+- Pencatatan kehadiran (check-in)
+- Riwayat presensi per pengguna
+- Rekap kehadiran bulanan
+- Analisis tingkat kehadiran berdasarkan periode
+
+## 🗄️ Struktur Database
+
+### Tabel `users`
+- `id` (Primary Key)
+- `username` (Unique)
+- `password` (Hashed)
+- `nama_lengkap`
+- `role` (siswa/karyawan)
+- `kelas` (untuk siswa)
+- `jabatan` (untuk karyawan)
+
+### Tabel `attendances`
+- `id` (Primary Key)
+- `user_id` (Foreign Key)
+- `tanggal`
+- `jam_masuk`
+- `jam_keluar`
+- `status` (hadir/sakit/izin/alpha)
+- `keterangan`
+
+## 🔌 Endpoint API
+
+### Autentikasi
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| POST | `/api/auth/login` | Login dan mendapatkan token |
+
+### Pengguna
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| POST | `/api/users` | Menambah pengguna baru |
+| GET | `/api/users` | Mendapatkan semua pengguna |
+| GET | `/api/users/:id` | Mendapatkan pengguna by ID |
+| PUT | `/api/users/:id` | Mengupdate data pengguna |
+
+### Presensi
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| POST | `/api/attendance` | Melakukan presensi |
+| GET | `/api/attendance/history/:user_id` | Riwayat presensi |
+| GET | `/api/attendance/summary/:user_id` | Rekap bulanan |
+| POST | `/api/attendance/analysis` | Analisis kehadiran |
+
+## 🛠️ Instalasi dan Menjalankan
+
+### Prerequisites
+- Node.js
+- MySQL Database
+- XAMPP (opsional)
+
+### Langkah Instalasi
+1. **Clone repository**
 ```bash
-$ npm install
+git clone <repository-url>
+cd presensi-online-ukl
 ```
 
-## Compile and run the project
-
+2. **Install dependencies**
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
-
+3. **Setup database**
 ```bash
-# unit tests
-$ npm run test
+# Generate Prisma client
+npx prisma generate
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Push schema ke database
+npx prisma db push
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+4. **Jalankan aplikasi**
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Development mode
+npm run start:dev
+
+# Production mode
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5. **Akses aplikasi**
+```
+http://localhost:3000
+```
 
-## Resources
+## 📸 Screenshot Hasil Testing
 
-Check out a few resources that may come in handy when working with NestJS:
+### 1. Login Berhasil
+![Login Success](screenshots/1-login-success.png)
+*Response: Token JWT berhasil di-generate*
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 2. Create User
+![Create User](screenshots/2-create-user.png)
+*Response: User baru berhasil dibuat*
 
-## Support
+### 3. Get User Data
+![Get User](screenshots/3-get-user.png)
+*Response: Data user berhasil diambil*
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 4. Attendance Check-in
+![Attendance Check-in](screenshots/4-attendance-checkin.png)
+*Response: Presensi berhasil dicatat*
 
-## Stay in touch
+### 5. Attendance History
+![Attendance History](screenshots/5-attendance-history.png)
+*Response: Riwayat presensi user*
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 6. Monthly Summary
+![Monthly Summary](screenshots/6-monthly-summary.png)
+*Response: Rekap kehadiran bulanan*
 
-## License
+### 7. Attendance Analysis
+![Attendance Analysis](screenshots/7-attendance-analysis.png)
+*Response: Analisis tingkat kehadiran*
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 🔐 Cara Penggunaan
+
+### 1. Mendapatkan Token
+```bash
+POST /api/auth/login
+{
+  "username": "admin",
+  "password": "password123"
+}
+```
+
+### 2. Menggunakan Token
+Setelah login, gunakan token di header:
+```
+Authorization: Bearer <your-token>
+```
+
+### 3. Contoh Request Presensi
+```bash
+POST /api/attendance
+Headers: Authorization: Bearer <token>
+{
+  "status": "hadir",
+  "keterangan": "Hadir tepat waktu"
+}
+```
+
+## 📊 Contoh Response
+
+### Login Success
+```json
+{
+  "status": "success",
+  "message": "Login berhasil",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+### User Created
+```json
+{
+  "id": 1,
+  "username": "siswa1",
+  "nama_lengkap": "Siswa Pertama",
+  "role": "siswa",
+  "kelas": "XI RPL",
+  "created_at": "2024-01-15T10:30:00.000Z"
+}
+```
+
+### Monthly Summary
+```json
+{
+  "user_id": 1,
+  "bulan": 1,
+  "tahun": 2024,
+  "total_hari": 31,
+  "hadir": 20,
+  "sakit": 2,
+  "izin": 1,
+  "alpha": 8,
+  "persentase_kehadiran": "64.52%"
+}
+```
+
+## 👨‍💻 Developer
+**Nama:** [Nama Anda]  
+**Kelas:** XI RPL  
+**Sekolah:** [Nama Sekolah]  
+
+## 📄 Lisensi
+Project ini dibuat untuk memenuhi tugas **Uji Kenaikan Level (UKL)** Kelas XI RPL.
+
+---
+
+**🎉 Selamat! Aplikasi Presensi Online siap digunakan.**
